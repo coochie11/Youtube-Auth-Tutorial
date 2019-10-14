@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Registration from './auth/Registration'
-import Login from './auth/Login'
+// import Login from './auth/Login'
+import FunctionalLogin from './auth/Login_UI';
 
 export default class Home extends Component{
   constructor(props){
@@ -45,7 +46,8 @@ export default class Home extends Component{
         {/* <button onClick={this.handleLogoutClick}>Logout</button> */}
         {/* arrow関数でも違いないよね */}
         <Registration handleSuccessfulAuth={this.handleSuccessfulAuth} />
-        <Login handleSuccessfulAuth={this.handleSuccessfulAuth} />
+        {/* <Login handleSuccessfulAuth={this.handleSuccessfulAuth} /> */}
+        <FunctionalLogin handleSuccessfulAuth={this.handleSuccessfulAuth} />
 
 
       </div>

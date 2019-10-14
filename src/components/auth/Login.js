@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import axios from 'axios';
 
+
+
+
 export default class Login extends Component{
   constructor(props){
     super(props)
@@ -13,6 +16,7 @@ export default class Login extends Component{
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
+
 
   handleChange(event){
     console.log("handle change", event);
@@ -59,13 +63,22 @@ export default class Login extends Component{
 
 
   render(){
-    return (<div>
-      <form onSubmit={this.handleSubmit} >
-      <input type="email" name="email" placeholder="Email" value={this.state.email} onChange={this.handleChange} required />
-      <input type="password" name="password" placeholder="password" value={this.state.password} onChange={this.handleChange} required />
+    return (
+      <div>
 
-      <button type="submit" >Login</button>
-      </form>
+        <form onSubmit={this.handleSubmit} >
+        <input type="email" name="email" placeholder="Email" value={this.state.email} onChange={this.handleChange} required />
+        <input type="password" name="password" placeholder="password" value={this.state.password} onChange={this.handleChange} required />
+
+
+
+
+        <button type="submit" >Login</button>
+
+
+
+        </form>
+
     </div>);
 
     
