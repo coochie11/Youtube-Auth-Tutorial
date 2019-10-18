@@ -80,7 +80,8 @@ const Dashboard = props => {
   const classes = useStyles();
 
   const favorites = axios
-  .get("http://localhost:3001/favorites/dashboard")
+  .get("http://localhost:3001/favorites/dashboard",
+  {withCredentials: true })
   .then(res =>{
     console.log("get", res);
   })
