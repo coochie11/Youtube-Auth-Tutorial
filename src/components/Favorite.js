@@ -69,6 +69,9 @@ export default class Favorite extends Component{
       console.log("favo error", error);
     })
 
+    this.setState({open: false})
+
+
   }
 
   render(){

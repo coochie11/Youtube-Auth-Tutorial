@@ -1,8 +1,11 @@
-import React from "react";
+import React, {Component} from "react";
 import axios from "axios";
 import Favorite from "./Favorite";
 
-import { makeStyles } from '@material-ui/core/styles';
+
+
+import { withStyles } from '@material-ui/core/styles';
+// import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -22,7 +25,7 @@ import Divider from '@material-ui/core/Divider';
 import Container from '@material-ui/core/Container';
 
 
-const useStyles = makeStyles(theme=>({
+const styles = theme=>({
   toolbar: {
     borderBottom: `1px solid ${theme.palette.divider}`,
   },
@@ -62,7 +65,7 @@ const useStyles = makeStyles(theme=>({
     },
   },
 
-}))
+});
 
 const featuredPosts = [
   {
@@ -71,130 +74,154 @@ const featuredPosts = [
     description:
     "this is a test",
   },
-
-
 ]
 
-const Dashboard = props => {
+class Dashboard extends Component{
+  constructor(props){
+    super(props)
 
-  const classes = useStyles();
+    this.state={favorites: []}
+  }
 
-  const favorites = axios
-  .get("http://localhost:3001/favorites/dashboard",
-  {withCredentials: true })
-  .then(res =>{
-    console.log("get", res);
-  })
-  .catch(error=>{
-    console.log("error", error);
-  })
+  componentDidMount(){
+    
+    axios
+    .get("http://localhost:3001/favorites/dashboard",
+    {withCredentials: true })
+    .then(res =>{
+      console.log("get", res);
+      console.log("get", res.data.favo_all);
+      console.log(typeof res.data.favo_all);
+      console.log([res.data.favo_all])
+
+      // Array.prototype.push.apply(favoritess, [res.data.favo_all])
+      // console.log(favoritess)
 
 
-  return(
-    <React.Fragment>
-      <CssBaseline />
-      <Container maxWidth="lg">
-        <Toolbar className="{classes.toolbar}">
-          <Button size="small">
-            Like
-          </Button>
-          <Typography
-          component="h2"
-          variant="h5"
-          color="inherit"
-          align="center"
-          noWrap
-          className={classes.toolbarTitle}>
-            {props.user.email}
-          </Typography>
-          <IconButton>
-            <SearchIcon />
-          </IconButton>
-          {/* <Button variant="outlined" size="small">Me</Button> */}
-          <Favorite loggedInStatus = {props.loggedInStatus}
-          user={props.user} />
-        </Toolbar>
-        {/* <Toolbar 
-        component="nav" 
-        variant="dense"
-        className={classes.toolbarSecondary}
-        >
-        </Toolbar> */}
-        <main>
-          {/* <Paper className={classes.mainFeaturedPost}>
-            {
-              <img
-                style={{ display: 'none' }}
-                src="https://source.unsplash.com/user/erondu"
-                alt="background"
-              />
-            }
-            <div className={classes.overlay} />
-            <Grid container>
-              <Grid item md={6}>
-                <Typography 
-                component="h1"
-                variant="h5"
-                color="inherit"
-                gutterBottom>
-                   Title of a longer featured blog post
-                </Typography>
+      this.setState({favorites: res.data.favo_all})
+
+    })
+    .catch(error=>{
+      console.log("error", error);
+    })
+  }
+
+
+
+
+  render(){
+    const { classes } = this.props;
+
+    return(
+      <React.Fragment>
+        <CssBaseline />
+        <Container maxWidth="lg">
+          <Toolbar className="{classes.toolbar}">
+            <Button size="small">
+              Like
+            </Button>
+            <Typography
+            component="h2"
+            variant="h5"
+            color="inherit"
+            align="center"
+            noWrap
+            className={classes.toolbarTitle}>
+              {this.props.user.email}
+            </Typography>
+            <IconButton>
+              <SearchIcon />
+            </IconButton>
+            {/* <Button variant="outlined" size="small">Me</Button> */}
+            <Favorite loggedInStatus = {this.props.loggedInStatus}
+            user={this.props.user} />
+          </Toolbar>
+          {/* <Toolbar 
+          component="nav" 
+          variant="dense"
+          className={classes.toolbarSecondary}
+          >
+          </Toolbar> */}
+          <main>
+            {/* <Paper className={classes.mainFeaturedPost}>
+              {
+                <img
+                  style={{ display: 'none' }}
+                  src="https://source.unsplash.com/user/erondu"
+                  alt="background"
+                />
+              }
+              <div className={classes.overlay} />
+              <Grid container>
+                <Grid item md={6}>
+                  <Typography 
+                  component="h1"
+                  variant="h5"
+                  color="inherit"
+                  gutterBottom>
+                     Title of a longer featured blog post
+                  </Typography>
+                </Grid>
+  
               </Grid>
-
+            </Paper> */}
+  
+            <Grid container spacing={4}>
+              {this.state.favorites.map(post => (
+                <Grid item key={post.id}
+                xs={6} md={3} >
+                  <CardActionArea component="a" href="#">
+                    <Card className={classes.card}>
+                      <div className={classes.cardDetails}>
+                        <CardContent>
+                          <Typography component="h2" variant="h5">
+                            {/* {console.log(post)} */}
+                            {post.favorite_thing}
+                            {/* {post.name} */}
+                          </Typography>
+                          {/* <Typography variant="subtitle1" color="textSecondary">
+                            {post.description}
+                          </Typography> */}
+                        </CardContent>
+                        <CardMedia
+                        className={classes.cardMedia}
+                        image="https://source.unsplash.com/random"
+                        title="Image title" />
+                        <CardActions>
+                          <Button size="small">
+                            learn more
+                          </Button>
+                        </CardActions>
+                      </div>
+                    </Card>
+                  </CardActionArea>
+  
+                  
+                </ Grid>
+  
+  
+                      
+  
+  
+  
+              ))}
             </Grid>
-          </Paper> */}
-
-          <Grid container spacing={4}>
-            {featuredPosts.map(post => (
-              <Grid item key={post.title}
-              xs={6} md={3} >
-                <CardActionArea component="a" href="#">
-                  <Card className={classes.card}>
-                    <div className={classes.cardDetails}>
-                      <CardContent>
-                        <Typography component="h2" variant="h5">
-                          {post.title}
-                        </Typography>
-                        {/* <Typography variant="subtitle1" color="textSecondary">
-                          {post.description}
-                        </Typography> */}
-                      </CardContent>
-                      <CardMedia
-                      className={classes.cardMedia}
-                      image="https://source.unsplash.com/random"
-                      title="Image title" />
-                      <CardActions>
-                        <Button size="small">
-                          learn more
-                        </Button>
-                      </CardActions>
-                    </div>
-                  </Card>
-                </CardActionArea>
-
-                
-              </ Grid>
-
-
-                    
-
-
-
-            ))}
-          </Grid>
-          
-
-        </main>
-
-      </Container>
-
-
-    </React.Fragment>
-
+            
+  
+          </main>
+  
+        </Container>
+  
+  
+      </React.Fragment>
+  
   );
-};
+  }
+  
+  
+}
 
 
 
 
-export default Dashboard;
+export default withStyles(styles)(Dashboard)
