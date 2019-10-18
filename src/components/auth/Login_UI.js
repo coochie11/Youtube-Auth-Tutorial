@@ -4,30 +4,11 @@ import axios from 'axios';
 
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import FilledInput from '@material-ui/core/FilledInput';
 import FormControl from '@material-ui/core/FormControl';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
 
-
-// const styles = theme => ({
-//   root: {
-//     background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-//     border: 0,
-//     borderRadius: 3,
-//     boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-//     color: 'white',
-//     height: 48,
-//     padding: '0 30px',
-//   },
-// });
 
 const styles = theme => ({
   container: {
@@ -38,6 +19,8 @@ const styles = theme => ({
     margin: theme.spacing(1),
   },
 });
+
+
 
 
 class FunctionalLogin extends Component{
@@ -55,8 +38,6 @@ class FunctionalLogin extends Component{
 
 
   handleChange(event){
-    console.log("handle change", event);
-    console.log(event.target)
     this.setState({
       [event.target.name]: event.target.value
     });

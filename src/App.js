@@ -4,6 +4,7 @@ import axios from "axios";
 
 import Home from './components/Home';
 import Dashboard from "./components/Dashboard";
+import Favorite from './components/Favorite';
 
 
 
@@ -81,8 +82,12 @@ export default class App extends Component {
       {/* {...props}で全てのpropを受け取る */}
       <Route 
       exact path={"/dashboard"} render={props=>(
-        <Dashboard {...props} loggedInStatus = {this.state.loggedInStatus} />
+        <Dashboard {...props} loggedInStatus = {this.state.loggedInStatus} user={this.state.user} />
       )} />
+      {/* <Route 
+      exact path={"/favorite"} render={props=>(
+        <Favorite {...props} loggedInStatus = {this.state.loggedInStatus} user={this.state.user} />
+      )} /> */}
       </Switch>
       </BrowserRouter>
       
